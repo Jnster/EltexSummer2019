@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.aoklimov.organization.Developer;
 import ru.aoklimov.organization.Manager;
-import ru.aoklimov.organization.Sales;
+import ru.aoklimov.organization.Sale;
 import ru.aoklimov.organization.User;
 
 import java.io.File;
@@ -20,7 +20,7 @@ public class FileEditorTest {
     public void before() {
         String[] lang = {"lang1", "lang2"};
         String[] items = {"Rt", "rt", "RT"};
-        Sales[] sales = {new Sales(3L, items, 50.2), new Sales(4L, items, 568.1)};
+        Sale[] sales = {new Sale(3L, items, 50.2), new Sale(4L, items, 568.1)};
         manager = new Manager(1L, "foi", "phone", "email", sales);
         developer = new Developer(2L, "foi", "phone", "email", lang);
     }

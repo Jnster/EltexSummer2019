@@ -1,10 +1,11 @@
 package ru.aoklimov.organization;
 
+import org.jetbrains.annotations.NotNull;
 import ru.aoklimov.util.ArrayUtils;
 
 import java.util.Arrays;
 
-public class Developer extends User {
+public class Developer extends User implements Comparable<Developer> {
 
     private String[] languages;
 
@@ -57,5 +58,12 @@ public class Developer extends User {
         int result = super.hashCode();
         result = 31 * result + Arrays.hashCode(languages);
         return result;
+    }
+
+    @Override
+    public int compareTo(@NotNull Developer developer) {
+        return this.getPhone().compareTo(developer.getPhone()) + this.getFio().compareTo(developer.getFio())
+                + this.getEmail().compareTo(developer.getEmail()) + this.getId().compareTo(developer.getId())
+                + Arrays.compare(this.languages, developer.getLanguages());
     }
 }
