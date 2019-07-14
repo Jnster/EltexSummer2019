@@ -1,14 +1,15 @@
 package ru.aoklimov.organization;
 
+import org.jetbrains.annotations.NotNull;
 import ru.aoklimov.util.ArrayUtils;
 
 import java.util.Arrays;
 
-public class Manager extends User {
+public class Manager extends User implements Comparable<Manager> {
 
-    private Sales[] sales;
+    private Sale[] sales;
 
-    public Manager(Long id, String fio, String phone, String email, Sales[] sales) {
+    public Manager(Long id, String fio, String phone, String email, Sale[] sales) {
         super(id, fio, phone, email);
         this.sales = sales;
     }
@@ -17,18 +18,18 @@ public class Manager extends User {
         super();
     }
 
-    public Sales[] getSales() {
+    public Sale[] getSales() {
         return sales;
     }
 
-    public void setSales(Sales[] sales) {
+    public void setSales(Sale[] sales) {
         this.sales = sales;
     }
 
     public void setSales(String... sales) {
-        this.sales = new Sales[sales.length];
+        this.sales = new Sale[sales.length];
         for (int index = 0; index < sales.length; index++) {
-            Sales buffer = new Sales();
+            Sale buffer = new Sale();
             buffer.fromCSV(sales[index]);
             this.sales[index] = buffer;
         }
@@ -67,5 +68,12 @@ public class Manager extends User {
         int result = super.hashCode();
         result = 31 * result + Arrays.hashCode(sales);
         return result;
+    }
+
+    @Override
+    public int compareTo(@NotNull Manager manager) {
+        return this.getPhone().compareTo(manager.getPhone()) + this.getFio().compareTo(manager.getFio())
+                + this.getEmail().compareTo(manager.getEmail()) + this.getId().compareTo(manager.getId())
+                + Arrays.compare(this.sales, manager.getSales());
     }
 }

@@ -1,21 +1,23 @@
 package ru.aoklimov.organization;
 
+import org.jetbrains.annotations.NotNull;
 import ru.aoklimov.util.ArrayUtils;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-public class Sales implements CSV {
+public class Sale implements CSV, Comparable<Sale> {
     private Long id;
     private String[] items;
     private Double cost;
 
-    public Sales(Long id, String[] items, Double cost) {
+    public Sale(Long id, String[] items, Double cost) {
         this.id = id;
         this.items = items;
         this.cost = cost;
     }
 
-    public Sales() {
+    public Sale() {
 
     }
 
@@ -61,12 +63,12 @@ public class Sales implements CSV {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Sales sales = (Sales) o;
+        Sale sale = (Sale) o;
 
-        if (id != null ? !id.equals(sales.id) : sales.id != null) return false;
+        if (!Objects.equals(id, sale.id)) return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(items, sales.items)) return false;
-        return cost != null ? cost.equals(sales.cost) : sales.cost == null;
+        if (!Arrays.equals(items, sale.items)) return false;
+        return Objects.equals(cost, sale.cost);
     }
 
     @Override
@@ -75,5 +77,11 @@ public class Sales implements CSV {
         result = 31 * result + Arrays.hashCode(items);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(@NotNull Sale sale) {
+        return this.id.compareTo(sale.getId()) + this.cost.compareTo(sale.getCost())
+                + Arrays.compare(this.items, sale.getItems());
     }
 }
