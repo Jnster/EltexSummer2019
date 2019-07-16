@@ -5,6 +5,6 @@ public class BlockingPrinter {
     private Integer a = 0;
 
     public synchronized void inc() {
-        System.out.println(++a);
+        System.out.println(++a + "\t| " + Thread.currentThread().getName());
     }
 }
